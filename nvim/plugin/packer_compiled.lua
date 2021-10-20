@@ -72,6 +72,54 @@ _G.packer_plugins = {
   dracula = {
     loaded = true,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/dracula"
+  },
+  ["lspsaga.nvim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+  },
+  molokai = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/molokai"
+  },
+  nerdtree = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/nerdtree"
+  },
+  ["nvim-lsp-installer"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer"
+  },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+  },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["packer.nvim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  },
+  ["palenight.vim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/palenight.vim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+  },
+  ["vim-airline"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/vim-airline"
+  },
+  ["vim-solarized8"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/vim-solarized8"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/vim-surround"
   }
 }
 
