@@ -5,6 +5,7 @@ return require('packer').startup(
     -- self managing package manager
     use 'wbthomason/packer.nvim'
     -- use 'jose-elias-alvarez/null-ls.nvim'
+    use 'nvim-lua/plenary.nvim'
 
     -- must haves
     use 'tpope/vim-surround'
@@ -24,13 +25,12 @@ return require('packer').startup(
       'williamboman/nvim-lsp-installer',
     }
 
-    use 'neovim/nvim-lspconfig'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/nvim-cmp'
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'nvim-lua/plenary.nvim'
     use 'glepnir/lspsaga.nvim'
+    use 'nvim-telescope/telescope.nvim'
   end
 )

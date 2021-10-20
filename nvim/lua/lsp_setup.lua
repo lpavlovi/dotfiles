@@ -38,25 +38,51 @@ end
 function M.setup_nvim_autocomplete()
   cmp.setup({
     mapping = {
+      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }),
+      ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
     },
     sources = {
       { name = 'nvim_lsp' },
-      { name = 'buffer' },
+      { name = 'buffer' }
     }
   })
 end
 
 function M.setup_lsp_servers()
   lsp_installer.on_server_ready(function(server)
+      local common_on_attach = on_attach
       local opts = {
-        on_attach = on_attach,
+        on_attach = common_on_attach,
         capabilities = nvim_cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
       }
+
+      -- note: you still need eslint installed in your path / local project
+      if server.name == "eslint" then
+        opts = {
+          on_attach = function (client, bufnr)
+            -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
+            -- the resolved capabilities of the eslint server ourselves!
+            client.resolved_capabilities.document_formatting = true
+            common_on_attach(client, bufnr)
+          end,
+          settings = {
+            format = { enable = true }, -- this will enable formatting
+          },
+        }
+      end
+
       server:setup(opts)
       vim.cmd [[ do User LspAttachBuffers ]]
   end)
@@ -74,6 +100,7 @@ function M.setup_diagnostics()
     }
   )
 end
+
 
 function M.Setup()
   M.setup_nvim_autocomplete()
