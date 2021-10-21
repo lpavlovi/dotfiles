@@ -29,6 +29,8 @@ o.smarttab = true
 o.number = true
 o.buftype = ''
 o.cmdheight = 2
+o.numberwidth = 4
+o.signcolumn = 'yes'
 
 vim.g.mapleader = '\\'
 

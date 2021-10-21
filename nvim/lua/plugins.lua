@@ -10,7 +10,18 @@ return require('packer').startup(
     -- must haves
     use 'tpope/vim-surround'
     use 'scrooloose/nerdtree'
-    use 'bling/vim-airline'
+
+    use {
+      'romgrk/barbar.nvim',
+      requires = {'kyazdani42/nvim-web-devicons'}
+    }
+
+    -- use 'vim-airline/vim-airline'
+    -- use 'vim-airline/vim-airline-themes'
+    use {
+      'hoob3rt/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
 
     -- colorschemes
     use {'dracula/vim', as = 'dracula'}
