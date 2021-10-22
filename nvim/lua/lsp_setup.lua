@@ -1,10 +1,9 @@
 local M = {}
-local nvim_lsp = require('lspconfig')
 local lsp_installer = require("nvim-lsp-installer")
 local cmp = require'cmp'
 local nvim_cmp = require('cmp_nvim_lsp')
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -100,7 +99,7 @@ function M.setup_diagnostics()
       },
       -- Use a function to dynamically turn signs off
       -- and on, using buffer local variables
-      signs = function(bufnr, client_id)
+      signs = function(bufnr, _)
         local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'show_signs')
         -- No buffer local variable set, so just enable by default
         if not ok then

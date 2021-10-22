@@ -7,6 +7,7 @@ local map = vim.api.nvim_set_keymap
 -- set up packer
 require("plugins")
 require("lsp_setup").Setup()
+require("config")
 
 -- plugin settings
 -- airline
@@ -77,4 +78,4 @@ map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>'
 
 
 -- commands
-vim.cmd('colo palenight')
+vim.cmd('colo dracula')
