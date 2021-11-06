@@ -1,9 +1,8 @@
-local M = {}
 local lsp_installer = require("nvim-lsp-installer")
 local cmp = require'cmp'
 local nvim_cmp = require('cmp_nvim_lsp')
 
-local on_attach = function(_, bufnr)
+local function on_attach(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -34,7 +33,7 @@ local on_attach = function(_, bufnr)
 end
 
 -- Setup nvim-cmp.
-function M.setup_nvim_autocomplete()
+local function setup_nvim_autocomplete()
   cmp.setup({
     mapping = {
       ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -54,12 +53,13 @@ function M.setup_nvim_autocomplete()
     },
     sources = {
       { name = 'nvim_lsp' },
-      { name = 'window' }
+      { name = 'window' },
+      { name = 'buffer' }
     }
   })
 end
 
-function M.setup_lsp_servers()
+local function setup_lsp_servers()
   lsp_installer.on_server_ready(function(server)
       local common_on_attach = on_attach
       local opts = {
@@ -81,13 +81,22 @@ function M.setup_lsp_servers()
           },
         }
       end
+      if server.name == "sumneko_lua" then
+        opts.settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' }
+            }
+          }
+        }
+      end
 
       server:setup(opts)
       vim.cmd [[ do User LspAttachBuffers ]]
   end)
 end
 
-function M.setup_diagnostics()
+local function setup_diagnostics()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       -- Enable underline, use default values
@@ -114,11 +123,6 @@ function M.setup_diagnostics()
   )
 end
 
-
-function M.Setup()
-  M.setup_nvim_autocomplete()
-  M.setup_lsp_servers()
-  M.setup_diagnostics()
-end
-
-return M
+setup_nvim_autocomplete()
+setup_lsp_servers()
+setup_diagnostics()

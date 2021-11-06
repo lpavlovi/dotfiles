@@ -4,10 +4,7 @@ local bo = vim.bo
 
 local map = vim.api.nvim_set_keymap
 
--- set up packer
-require("plugins")
-require("lsp_setup").Setup()
-require("config")
+require("core")
 
 -- plugin settings
 -- airline
@@ -32,7 +29,7 @@ o.buftype = ''
 o.cmdheight = 2
 o.numberwidth = 4
 o.signcolumn = 'yes'
-
+o.clipboard = 'unnamedplus'
 vim.g.mapleader = '\\'
 
 o.termguicolors = true
@@ -66,6 +63,7 @@ map('n', '<C-j>', '<C-w>j', {})
 map('n', '<C-k>', '<C-w>k', {})
 map('n', '<C-l>', '<C-w>l', {})
 map('n', '<Tab>', ':bn<cr>', { silent = true })
+map('n', '<S-Tab>', ':bp<cr>', { silent = true })
 map('n', ';', ':', { noremap = true })
 map('n', '<leader>h', ':NERDTreeFind<cr>', { silent = true })
 map('n', '<leader>n', ':NERDTreeToggle<cr>', { silent = true })
@@ -75,7 +73,6 @@ map('n', '<leader>ff', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>
 map('n', '<leader>fg', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', {})
 map('n', '<leader>fb', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', {})
 map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', {})
-
 
 -- commands
 vim.cmd('colo dracula')
