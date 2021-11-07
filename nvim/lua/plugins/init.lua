@@ -1,31 +1,33 @@
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
+  print("Cloning packer")
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
+vim.cmd("packadd packer.nvim")
+local packer = require'packer'
+local use = packer.use
 
-return require('packer').startup(
-  function(use)
-    -- self managing package manager
-    use 'wbthomason/packer.nvim'
+return packer.startup(
+  function()
     -- use 'jose-elias-alvarez/null-ls.nvim'
     use 'nvim-lua/plenary.nvim'
 
+    -- self managing package manager
+    use {'wbthomason/packer.nvim', event = "VimEnter"}
+    use {'kyazdani42/nvim-web-devicons'}
     -- must haves
     use 'tpope/vim-surround'
     use 'scrooloose/nerdtree'
 
     use {
-      'romgrk/barbar.nvim',
-      requires = {'kyazdani42/nvim-web-devicons'}
-    }
-
-    -- use 'vim-airline/vim-airline'
-    -- use 'vim-airline/vim-airline-themes'
-    use {
       'hoob3rt/lualine.nvim',
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+      after = "nvim-web-devicons",
     }
+   use {
+      "famiu/feline.nvim",
+      after = "nvim-web-devicons",
+   }
 
     -- colorschemes
     use {'dracula/vim', as = 'dracula'}
@@ -33,18 +35,15 @@ return require('packer').startup(
     use 'lifepillar/vim-solarized8'
     use 'tomasr/molokai'
 
-
     -- new features!
-    use {
-      'neovim/nvim-lspconfig',
-      'williamboman/nvim-lsp-installer',
-      config=require'plugins.lsp',
-    }
+    
+    use { 'neovim/nvim-lspconfig' }
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/nvim-cmp'
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
     use {
       "nvim-telescope/telescope.nvim",
       module = "telescope",
@@ -58,10 +57,13 @@ return require('packer').startup(
       config = require'plugins.telescope'
     }
 
-    if packer_bootstrap then
-      require('packer').sync()
-    end
+    use { 'williamboman/nvim-lsp-installer', config=require'plugins.lsp'}
 
+    -- Sync packer if we ran bootstrapping code (top of the file)
+    -- on initializing neovim
+    if packer_bootstrap then
+      packer.sync()
+    end
   end
 )
 
