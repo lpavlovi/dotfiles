@@ -9,61 +9,45 @@ local packer = require'packer'
 local use = packer.use
 
 return packer.startup(
-  function()
-    -- use 'jose-elias-alvarez/null-ls.nvim'
-    use 'nvim-lua/plenary.nvim'
+function()
+  -- self managing package manager
+  use {'wbthomason/packer.nvim', event = "VimEnter"}
 
-    -- self managing package manager
-    use {'wbthomason/packer.nvim', event = "VimEnter"}
-    use {'kyazdani42/nvim-web-devicons'}
-    -- must haves
-    use 'tpope/vim-surround'
-    use 'scrooloose/nerdtree'
+  use 'nvim-lua/plenary.nvim'
 
-    use {
-      'hoob3rt/lualine.nvim',
-      after = "nvim-web-devicons",
-    }
-   use {
-      "famiu/feline.nvim",
-      after = "nvim-web-devicons",
-   }
+  use {'kyazdani42/nvim-web-devicons'}
 
-    -- colorschemes
-    use {'dracula/vim', as = 'dracula'}
-    use 'drewtempelmeyer/palenight.vim'
-    use 'lifepillar/vim-solarized8'
-    use 'tomasr/molokai'
+  -- must haves
+  use 'tpope/vim-surround'
+  use 'scrooloose/nerdtree'
 
-    -- new features!
-    
-    use { 'neovim/nvim-lspconfig' }
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/nvim-cmp'
+  -- colorschemes
+  use {'dracula/vim', as = 'dracula'}
+  use 'drewtempelmeyer/palenight.vim'
+  use 'lifepillar/vim-solarized8'
+  use 'tomasr/molokai'
 
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  -- new features!
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/nvim-cmp'
 
-    use {
-      "nvim-telescope/telescope.nvim",
-      module = "telescope",
-      cmd = "Telescope",
-      requires = {
-        {
-          "nvim-telescope/telescope-fzf-native.nvim",
-          run = "make",
-        },
-      },
-      config = require'plugins.telescope'
-    }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-    use { 'williamboman/nvim-lsp-installer', config=require'plugins.lsp'}
+  use {
+    "nvim-telescope/telescope.nvim",
+    module = "telescope",
+    config = "require'plugins.telescope'",
+  }
 
-    -- Sync packer if we ran bootstrapping code (top of the file)
-    -- on initializing neovim
-    if packer_bootstrap then
-      packer.sync()
-    end
+  use { 'williamboman/nvim-lsp-installer', config="require'plugins.lsp'" }
+
+  -- Sync packer if we ran bootstrapping code (top of the file)
+  -- on initializing neovim
+  if packer_bootstrap then
+    packer.sync()
   end
+end
 )
 

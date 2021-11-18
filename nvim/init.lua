@@ -6,12 +6,6 @@ local map = vim.api.nvim_set_keymap
 
 require("core")
 
--- plugin settings
--- airline
-vim.g['airline#extensions#tabline#enabled'] = 1
-vim.g['airline#extensions#tabline#formatter'] = 'default'
-vim.g['airline_powerline_fonts'] = 1
-
 -- global options
 o.swapfile = true
 o.dir = '/tmp'
