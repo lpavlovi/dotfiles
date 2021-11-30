@@ -69,4 +69,6 @@ map('n', '<leader>fb', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', 
 map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', {})
 
 -- commands
-vim.cmd('colo dracula')
+-- vim.cmd('colo dracula')
+vim.cmd('colo solarized8_flat')
+vim.cmd('set background=dark')

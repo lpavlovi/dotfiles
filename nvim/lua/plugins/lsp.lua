@@ -3,9 +3,6 @@ if not present then
   return
 end
 
-local cmp = require'cmp'
-local nvim_cmp = require('cmp_nvim_lsp')
-
 local function on_attach(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -36,41 +33,18 @@ local function on_attach(_, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
--- Setup nvim-cmp.
-local function setup_nvim_autocomplete()
-  cmp.setup({
-    mapping = {
-      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      }),
-      ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
-    },
-    sources = {
-      { name = 'nvim_lsp' },
-      { name = 'window' },
-      { name = 'buffer' }
-    }
-  })
-end
-
 local function setup_lsp_servers()
   lsp_installer.on_server_ready(function(server)
       local common_on_attach = on_attach
       local opts = {
         on_attach = common_on_attach,
-        capabilities = nvim_cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
       }
 
+      -- Tailwind CSS
+      if server.name == "tailwindcss" then
+        opts.cmd = { "/Users/lukap/workspace/sandbox/node_modules/.bin/tailwindcss-language-server", "--stdio" }
+      end
       -- note: you still need eslint installed in your path / local project
       if server.name == "eslint" then
         opts = {
@@ -127,6 +101,5 @@ local function setup_diagnostics()
   )
 end
 
-setup_nvim_autocomplete()
 setup_lsp_servers()
 setup_diagnostics()

@@ -27,13 +27,35 @@ function()
   use 'lifepillar/vim-solarized8'
   use 'tomasr/molokai'
 
+  -- snippets
+  use {
+    "rafamadriz/friendly-snippets",
+    event = "InsertEnter",
+  }
+
   -- new features!
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/nvim-cmp'
+  use {
+    'hrsh7th/nvim-cmp',
+    config = "require'plugins.cmp'"
+  }
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+  use {
+    "L3MON4D3/LuaSnip",
+    wants = "friendly-snippets",
+    after = "nvim-cmp",
+    config = "require'plugins.luasnip'",
+  }
+
+  use {
+    'folke/trouble.nvim',
+    config = "require'plugins.trouble'",
+  }
+
 
   use {
     "nvim-telescope/telescope.nvim",
@@ -41,7 +63,11 @@ function()
     config = "require'plugins.telescope'",
   }
 
-  use { 'williamboman/nvim-lsp-installer', config="require'plugins.lsp'" }
+  use {
+    'williamboman/nvim-lsp-installer',
+    after = { "nvim-cmp", "nvim-lspconfig" },
+    config="require'plugins.lsp'",
+  }
 
   -- Sync packer if we ran bootstrapping code (top of the file)
   -- on initializing neovim
