@@ -13,7 +13,7 @@ o.smartcase = true
 o.laststatus = 2
 o.hlsearch = true
 o.incsearch = true
-o.scrolloff = 3
+o.scrolloff = 6
 o.showmatch = true
 o.ignorecase = true
 o.backspace = 'indent,eol,start'
@@ -21,7 +21,7 @@ o.smarttab = true
 o.number = true
 o.buftype = ''
 o.cmdheight = 1
-o.numberwidth = 2
+o.numberwidth = 3
 o.signcolumn = 'yes'
 o.clipboard = 'unnamedplus'
 vim.g.mapleader = '\\'
@@ -69,6 +69,6 @@ map('n', '<leader>fb', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', 
 map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', {})
 
 -- commands
--- vim.cmd('colo dracula')
-vim.cmd('colo solarized8_flat')
-vim.cmd('set background=dark')
+vim.cmd('colo dracula')
+-- vim.cmd('colo solarized8_flat')
+-- vim.cmd('set background=dark')
