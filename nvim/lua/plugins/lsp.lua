@@ -42,9 +42,9 @@ local function setup_lsp_servers()
       }
 
       -- Tailwind CSS
-      if server.name == "tailwindcss" then
-        opts.cmd = { "/Users/lukap/workspace/sandbox/node_modules/.bin/tailwindcss-language-server", "--stdio" }
-      end
+      -- if server.name == "tailwindcss" then
+        -- opts.cmd = { "/Users/lukap/workspace/sandbox/node_modules/.bin/tailwindcss-language-server", "--stdio" }
+      -- end
       -- note: you still need eslint installed in your path / local project
       if server.name == "eslint" then
         opts = {
