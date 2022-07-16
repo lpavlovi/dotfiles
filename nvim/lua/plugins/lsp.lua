@@ -1,8 +1,3 @@
-local present, lsp_installer = pcall(require, 'nvim-lsp-installer')
-if not present then
-  return
-end
-
 local function on_attach(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -33,73 +28,93 @@ local function on_attach(_, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local function setup_lsp_servers()
-  lsp_installer.on_server_ready(function(server)
-      local common_on_attach = on_attach
-      local opts = {
-        on_attach = common_on_attach,
-        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-      }
+-- Setup nvim-cmp.
+local function setup_nvim_autocomplete()
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
 
-      -- Tailwind CSS
-      -- if server.name == "tailwindcss" then
-        -- opts.cmd = { "/Users/lukap/workspace/sandbox/node_modules/.bin/tailwindcss-language-server", "--stdio" }
-      -- end
-      -- note: you still need eslint installed in your path / local project
-      if server.name == "eslint" then
-        opts = {
-          on_attach = function (client, bufnr)
-            -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
-            -- the resolved capabilities of the eslint server ourselves!
-            client.resolved_capabilities.document_formatting = true
-            common_on_attach(client, bufnr)
-          end,
-          settings = {
-            format = { enable = true }, -- this will enable formatting
-          },
-        }
-      end
-      if server.name == "sumneko_lua" then
-        opts.settings = {
-          Lua = {
-            diagnostics = {
-              globals = { 'vim' }
-            }
-          }
-        }
-      end
-
-      server:setup(opts)
-      vim.cmd [[ do User LspAttachBuffers ]]
-  end)
-end
-
-local function setup_diagnostics()
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Enable underline, use default values
-      underline = true,
-      -- Enable virtual text, override spacing to 4
-      virtual_text = {
-        spacing = 4,
-        prefix = '~',
-      },
-      -- Use a function to dynamically turn signs off
-      -- and on, using buffer local variables
-      signs = function(bufnr, _)
-        local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'show_signs')
-        -- No buffer local variable set, so just enable by default
-        if not ok then
-          return true
-        end
-
-        return result
+  local cmp = require'cmp'
+  local luasnip = require'luasnip'
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
       end,
-      -- Disable a feature
-      update_in_insert = false,
+    },
+    mapping = {
+      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({
+        select = true,
+      }),
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+      { name = 'buffer' }
     }
-  )
+  })
 end
 
+local function setup_lsp_servers()
+  local lspconfig = require'lspconfig'
+  local util = require'lspconfig.util'
+  local nvim_cmp = require'cmp_nvim_lsp'
+  local lsp_installer = require'nvim-lsp-installer'
+  local capabilities = nvim_cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local cwd_path = vim.fn.getcwd()
+  local root_project_path = util.root_pattern(".git")(cwd_path)
+  local node_modules_bin_path = "node_modules/.bin"
+
+  lsp_installer.setup {}
+  lspconfig.pyright.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
+  lspconfig.flow.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+      cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
+  }
+  lspconfig.sumneko_lua.setup{
+    on_attach = on_attach,
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
+        }
+      }
+    }
+  }
+
+end
+
+setup_nvim_autocomplete()
 setup_lsp_servers()
-setup_diagnostics()

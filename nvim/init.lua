@@ -1,5 +1,8 @@
+-- vim global options
 local o = vim.o
+-- vim window options
 local wo = vim.wo
+-- vim buffer options
 local bo = vim.bo
 
 local map = vim.api.nvim_set_keymap
@@ -13,7 +16,7 @@ o.smartcase = true
 o.laststatus = 2
 o.hlsearch = true
 o.incsearch = true
-o.scrolloff = 6
+o.scrolloff = 4
 o.showmatch = true
 o.ignorecase = true
 o.backspace = 'indent,eol,start'
@@ -58,6 +61,7 @@ map('n', '<C-k>', '<C-w>k', {})
 map('n', '<C-l>', '<C-w>l', {})
 map('n', '<Tab>', ':bn<cr>', { silent = true })
 map('n', '<S-Tab>', ':bp<cr>', { silent = true })
+map('n', '<leader>d', ':bd<cr>', {})
 map('n', ';', ':', { noremap = true })
 map('n', '<leader>h', ':NERDTreeFind<cr>', { silent = true })
 map('n', '<leader>n', ':NERDTreeToggle<cr>', { silent = true })
@@ -67,8 +71,7 @@ map('n', '<leader>ff', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>
 map('n', '<leader>fg', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', {})
 map('n', '<leader>fb', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', {})
 map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', {})
+map('n', '<leader>fw', '<cmd>lua require(\'telescope.builtin\').grep_string({search=vim.fn.expand(\'<cword>\')})<cr>', {})
+map('n', '<leader>g', '<cmd>lua print(vim.fn.expand(\'<cword>\'))<cr>', {})
 
--- commands
-vim.cmd('colo dracula')
--- vim.cmd('colo solarized8_flat')
--- vim.cmd('set background=dark')
+vim.cmd('silent! colo dracula')
