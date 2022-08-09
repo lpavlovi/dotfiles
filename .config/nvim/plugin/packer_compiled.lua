@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
     url = "https://github.com/hrsh7th/cmp-cmdline"
   },
+  ["cmp-conjure"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp-conjure",
+    url = "https://github.com/PaterJason/cmp-conjure"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -94,15 +99,47 @@ _G.packer_plugins = {
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["cmp-vsnip"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
+    url = "https://github.com/hrsh7th/cmp-vsnip"
+  },
   cmp_luasnip = {
     loaded = true,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  conjure = {
+    config = { "require'plugins.conjure'" },
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/conjure",
+    url = "https://github.com/Olical/conjure"
+  },
+  ["deoplete.nvim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/deoplete.nvim",
+    url = "https://github.com/Shougo/deoplete.nvim"
+  },
   dracula = {
     loaded = true,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/dracula",
     url = "https://github.com/dracula/vim"
+  },
+  ["float-preview.nvim"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/float-preview.nvim",
+    url = "https://github.com/ncm2/float-preview.nvim"
+  },
+  gruvbox = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/gruvbox",
+    url = "https://github.com/morhetz/gruvbox"
+  },
+  ["lualine.nvim"] = {
+    config = { "require'plugins.lualine'" },
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   molokai = {
     loaded = true,
@@ -131,6 +168,7 @@ _G.packer_plugins = {
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
+    config = { "require'plugins.treesitter'" },
     loaded = true,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -164,6 +202,22 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/lukap/.local/share/nvim/site/pack/packer/opt/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["tree-sitter-fennel"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/tree-sitter-fennel",
+    url = "https://github.com/travonted/tree-sitter-fennel"
+  },
+  ["vim-sexp"] = {
+    config = { "require'plugins.sexp'" },
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/vim-sexp",
+    url = "https://github.com/guns/vim-sexp"
+  },
+  ["vim-sexp-mappings-for-regular-people"] = {
+    loaded = true,
+    path = "/Users/lukap/.local/share/nvim/site/pack/packer/start/vim-sexp-mappings-for-regular-people",
+    url = "https://github.com/tpope/vim-sexp-mappings-for-regular-people"
   },
   ["vim-solarized8"] = {
     loaded = true,
@@ -206,6 +260,22 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
+-- Config for: vim-sexp
+time([[Config for vim-sexp]], true)
+require'plugins.sexp'
+time([[Config for vim-sexp]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require'plugins.lualine'
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require'plugins.treesitter'
+time([[Config for nvim-treesitter]], false)
+-- Config for: conjure
+time([[Config for conjure]], true)
+require'plugins.conjure'
+time([[Config for conjure]], false)
 -- Config for: nvim-lsp-installer
 time([[Config for nvim-lsp-installer]], true)
 require'plugins.lsp'

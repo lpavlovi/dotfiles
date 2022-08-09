@@ -76,9 +76,14 @@ local function setup_nvim_autocomplete()
     end, { "i", "s" }),
     },
     sources = {
+      { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
+      { name = 'conjure' },
+      { name = 'path' },
+      { name = 'buffer' },
       { name = 'luasnip' },
-      { name = 'buffer' }
+      { name = 'vsnip' },
+      { name = 'calc' },
     }
   })
 end
@@ -98,6 +103,14 @@ local function setup_lsp_servers()
       on_attach = on_attach,
       capabilities = capabilities,
   }
+  lspconfig.tsserver.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
+  lspconfig.jdtls.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
   lspconfig.flow.setup{
       on_attach = on_attach,
       capabilities = capabilities,
@@ -105,6 +118,7 @@ local function setup_lsp_servers()
   }
   lspconfig.sumneko_lua.setup{
     on_attach = on_attach,
+    filetypes = { "lua" },
     settings = {
       Lua = {
         diagnostics = {

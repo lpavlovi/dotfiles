@@ -28,20 +28,37 @@ local function load_plugins()
     use 'drewtempelmeyer/palenight.vim'
     use 'lifepillar/vim-solarized8'
     use 'tomasr/molokai'
-
-    -- new features!
-    use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/nvim-cmp'
-
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
+    use 'morhetz/gruvbox'
 
 
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use {
+      'hrsh7th/nvim-cmp',
+      requires= {
+        'neovim/nvim-lspconfig',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'PaterJason/cmp-conjure',
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-vsnip',
+      },
+    }
+
+    -- latest additions
+    use 'Shougo/deoplete.nvim'
+    use 'ncm2/float-preview.nvim'
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      config = "require'plugins.lualine'"
+    }
+    use { 'guns/vim-sexp', config="require'plugins.sexp'" }
+    use 'tpope/vim-sexp-mappings-for-regular-people'
+    use 'travonted/tree-sitter-fennel'
+
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config="require'plugins.treesitter'"}
 
     use {
       "nvim-telescope/telescope.nvim",
@@ -50,6 +67,9 @@ local function load_plugins()
     }
 
     use { 'williamboman/nvim-lsp-installer', config="require'plugins.lsp'" }
+
+
+    use { 'Olical/conjure', config="require'plugins.conjure'" }
 
     -- Sync packer if we ran bootstrapping code (top of the file)
     -- on initializing neovim
