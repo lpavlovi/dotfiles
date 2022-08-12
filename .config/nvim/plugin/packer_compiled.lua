@@ -260,18 +260,10 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
--- Config for: vim-sexp
-time([[Config for vim-sexp]], true)
-require'plugins.sexp'
-time([[Config for vim-sexp]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require'plugins.lualine'
 time([[Config for lualine.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require'plugins.treesitter'
-time([[Config for nvim-treesitter]], false)
 -- Config for: conjure
 time([[Config for conjure]], true)
 require'plugins.conjure'
@@ -280,6 +272,14 @@ time([[Config for conjure]], false)
 time([[Config for nvim-lsp-installer]], true)
 require'plugins.lsp'
 time([[Config for nvim-lsp-installer]], false)
+-- Config for: vim-sexp
+time([[Config for vim-sexp]], true)
+require'plugins.sexp'
+time([[Config for vim-sexp]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require'plugins.treesitter'
+time([[Config for nvim-treesitter]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
