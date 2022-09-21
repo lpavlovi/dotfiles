@@ -107,7 +107,10 @@ local function setup_lsp_servers()
       on_attach = on_attach,
       capabilities = capabilities,
   }
-  lspconfig.jdtls.setup{
+  lspconfig.clojure_lsp.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }  lspconfig.jdtls.setup{
       on_attach = on_attach,
       capabilities = capabilities,
   }
