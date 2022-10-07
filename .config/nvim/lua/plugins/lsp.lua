@@ -38,43 +38,69 @@ local function setup_nvim_autocomplete()
   local cmp = require'cmp'
   local luasnip = require'luasnip'
   cmp.setup({
+    enabled = function()
+      -- disable completion in comments
+      local context = require 'cmp.config.context'
+      -- keep command mode completion enabled when cursor is in a comment
+      if vim.api.nvim_get_mode().mode == 'c' then
+        return true
+      else
+        return not context.in_treesitter_capture("comment") 
+        and not context.in_syntax_group("Comment")
+      end
+    end,
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
         luasnip.lsp_expand(args.body)
       end,
     },
-    mapping = {
-      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {"i", "c"}),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {"i", "c"}),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({
-        select = true,
-      }),
-      ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+      ['<C-n>'] = {
+        c = function(fallback)
+          local cmp = require('cmp')
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<C-p>'] = {
+        c = function(fallback)
+          local cmp = require('cmp')
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    window = {
+      documentation = cmp.config.window.bordered(),
     },
+    -- formatting = {
+    --   format = function(entry, item)
+    --     local menu_map = {
+    --       buffer = '[Buf]',
+    --       nvim_lsp = '[LSP]',
+    --       nvim_lua = '[API]',
+    --       path = '[Path]',
+    --       luasnip = '[Snip]',
+    --       vsnip = '[Snip]',
+    --       conjure = '[Conj]',
+    --     }
+    --     item.menu = menu_map[entry.source.name] or string.format('[%s]', entry.source.name)
+    --     item.kind = vim.lsp.protocol.CompletionItemKind[item.kind]
+    --     return item
+    --   end,
+    -- },
     sources = {
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
@@ -135,3 +161,5 @@ end
 
 setup_nvim_autocomplete()
 setup_lsp_servers()
+
+
