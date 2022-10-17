@@ -66,8 +66,7 @@ local function load_plugins()
       config = "require'plugins.telescope'",
     }
 
-    use { 'williamboman/nvim-lsp-installer', config="require'plugins.lsp'" }
-
+    use { 'williamboman/mason.nvim', config="require'plugins.lsp'" }
 
     use { 'Olical/conjure', config="require'plugins.conjure'" }
 

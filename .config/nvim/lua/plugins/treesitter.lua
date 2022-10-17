@@ -8,14 +8,17 @@ else
     disable = {},
   },
   indent = {
-    enable = false,
+    enable = true,
     disable = {},
   },
   ensure_installed = {
     "tsx",
+    "typescript",
+    "javascript",
     "json",
     "yaml",
     "html",
+    "css",
     "scss",
     "python",
     "fennel",

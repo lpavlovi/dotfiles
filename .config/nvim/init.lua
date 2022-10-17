@@ -6,7 +6,6 @@ local wo = vim.wo
 local bo = vim.bo
 
 local map = vim.api.nvim_set_keymap
-
 require("core")
 
 -- global options
@@ -60,6 +59,7 @@ map('n', '<C-h>', '<C-w>h', {})
 map('n', '<C-j>', '<C-w>j', {})
 map('n', '<C-k>', '<C-w>k', {})
 map('n', '<C-l>', '<C-w>l', {})
+map('i', '<Tab>', '<ESC>', { silent = true })
 map('n', '<Tab>', ':bn<cr>', { silent = true })
 map('n', '<S-Tab>', ':bp<cr>', { silent = true })
 map('n', '<leader>d', ':bd<cr>', {})
@@ -76,9 +76,9 @@ map('n', '<leader>fw', '<cmd>lua require(\'telescope.builtin\').grep_string({sea
 map('n', '<leader>g', '<cmd>lua print(vim.fn.expand(\'<cword>\'))<cr>', {})
 
 -- vim.cmd('silent! colo dracula')
--- vim.cmd('silent! colo gruvbox')
-vim.cmd('silent! colo solarized8_flat')
-vim.cmd('silent! set background=light')
-vim.g['airline_solarized_bg']='light'
-vim.g['airline_powerline_fonts']=1
+vim.cmd('silent! colo gruvbox')
+-- vim.cmd('silent! colo solarized8_flat')
+-- vim.cmd('silent! set background=light')
+-- vim.g['airline_solarized_bg']='light'
+-- vim.g['airline_powerline_fonts']=1
 -- o.background="dark"
