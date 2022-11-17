@@ -128,7 +128,6 @@ local function setup_lsp_servers()
   lspconfig.clojure_lsp.setup{
       on_attach = on_attach,
       capabilities = capabilities,
-      filetypes = { "clj", "cljs" },
   }
   lspconfig.jdtls.setup{
       on_attach = on_attach,
