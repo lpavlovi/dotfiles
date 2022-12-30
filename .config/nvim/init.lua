@@ -26,6 +26,8 @@ o.cmdheight = 1
 o.numberwidth = 3
 o.signcolumn = 'yes'
 o.clipboard = 'unnamedplus'
+o.relativenumber = true
+o.rnu = true
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
