@@ -28,7 +28,6 @@ o.signcolumn = 'yes'
 o.clipboard = 'unnamedplus'
 o.relativenumber = true
 o.rnu = true
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 

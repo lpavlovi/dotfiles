@@ -4,7 +4,7 @@ if not present then
 else
   treesitter_configs.setup {
   highlight = {
-    enable = true,
+    enable = false,
     disable = {},
   },
   indent = {
