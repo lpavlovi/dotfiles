@@ -8,7 +8,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -113,31 +113,24 @@ local function setup_lsp_servers()
   local lsp_installer = require'mason'
   local capabilities = nvim_cmp.default_capabilities()
   local cwd_path = vim.fn.getcwd()
+  local home = vim.fn.expand('$HOME')
   local root_project_path = util.root_pattern(".git")(cwd_path)
   local node_modules_bin_path = "node_modules/.bin"
 
   lsp_installer.setup {}
   lspconfig.pyright.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
-  }
-  lspconfig.tsserver.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
   lspconfig.clojure_lsp.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = { "clj", "cljs" },
-  }
-  lspconfig.jdtls.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "clojure" },
   }
   lspconfig.flow.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
-      cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
   }
   lspconfig.sumneko_lua.setup{
     on_attach = on_attach,
@@ -150,7 +143,6 @@ local function setup_lsp_servers()
       }
     }
   }
-
 end
 
 setup_nvim_autocomplete()
