@@ -94,16 +94,55 @@ local function setup_nvim_autocomplete()
     --     return item
     --   end,
     -- },
+    formatting = {
+      format = function(_, vim_item)
+         vim.cmd("packadd lspkind-nvim")
+         vim_item.kind = require("lspkind").presets.codicons[vim_item.kind]
+         .. "  "
+         .. vim_item.kind
+         return vim_item
+      end,
+   },
     sources = {
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'conjure' },
       { name = 'path' },
-      { name = 'buffer' },
       { name = 'luasnip' },
       { name = 'calc' },
+    }, {
+      { name = 'buffer' }
+    },
+  })
+
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
     }
   })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+
 end
 
 local function setup_lsp_servers()
