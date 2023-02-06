@@ -1,2 +1,0 @@
-#!/bin/bash
-TZ=Europe/Berlin date -d @$1
