@@ -48,8 +48,8 @@ local function load_plugins()
     }
 
     -- latest additions
-    use 'Shougo/deoplete.nvim'
-    use 'ncm2/float-preview.nvim'
+    use { 'Shougo/deoplete.nvim', run= ':UpdateRemotePlugins', config = "require'plugins.deoplete'" }
+    use { 'ncm2/float-preview.nvim', config = "require'plugins.float_preview'" }
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -59,8 +59,11 @@ local function load_plugins()
     use 'tpope/vim-sexp-mappings-for-regular-people'
     use 'travonted/tree-sitter-fennel'
 
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config="require'plugins.treesitter'"}
+    -- repl
+    use 'tpope/vim-repeat'
+    use 'pappasam/nvim-repl'
 
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config="require'plugins.treesitter'"}
     use {
       "nvim-telescope/telescope.nvim",
       module = "telescope",

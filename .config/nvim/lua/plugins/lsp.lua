@@ -166,6 +166,10 @@ local function setup_lsp_servers()
     capabilities = capabilities,
     filetypes = { "clojure" },
   }
+  lspconfig.clojure_lsp.setup{
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
   lspconfig.flow.setup{
     on_attach = on_attach,
     capabilities = capabilities,
