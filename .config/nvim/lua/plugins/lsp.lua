@@ -175,7 +175,7 @@ local function setup_lsp_servers()
     capabilities = capabilities,
     cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
   }
-  lspconfig.sumneko_lua.setup{
+  lspconfig.lua_ls.setup{
     on_attach = on_attach,
     filetypes = { "lua" },
     settings = {

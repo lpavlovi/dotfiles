@@ -48,8 +48,8 @@ local function load_plugins()
     }
 
     -- latest additions
-    use { 'Shougo/deoplete.nvim', run= ':UpdateRemotePlugins', config = "require'plugins.deoplete'" }
     use { 'ncm2/float-preview.nvim', config = "require'plugins.float_preview'" }
+    use { 'Shougo/deoplete.nvim', run= ':UpdateRemotePlugins', config = "require'plugins.deoplete'" }
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
