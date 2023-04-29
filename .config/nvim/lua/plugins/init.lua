@@ -30,6 +30,8 @@ local function load_plugins()
     use 'tomasr/molokai'
     use 'morhetz/gruvbox'
 
+    -- navigation
+    use { "alexghergh/nvim-tmux-navigation", config = "require'plugins.tmux_navigation'" }
 
     use {
       'hrsh7th/nvim-cmp',

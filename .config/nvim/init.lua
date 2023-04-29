@@ -57,10 +57,19 @@ o.tabstop = 2
 -- Example usage:
 --   map( mode, mappable key, behaviour, options )
 map('n', ',/', ':noh<cr>', { silent = true})
-map('n', '<C-h>', '<C-w>h', {})
-map('n', '<C-j>', '<C-w>j', {})
-map('n', '<C-k>', '<C-w>k', {})
-map('n', '<C-l>', '<C-w>l', {})
+
+-- map('n', '<C-h>', '<C-w>h', {})
+-- map('n', '<C-j>', '<C-w>j', {})
+-- map('n', '<C-k>', '<C-w>k', {})
+-- map('n', '<C-l>', '<C-w>l', {})
+map('n', "<C-h>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateLeft()<cr>', {})
+map('n', "<C-j>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateDown()<cr>', {})
+map('n', "<C-k>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateUp()<cr>', {})
+map('n', "<C-l>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateRight()<cr>', {})
+map('n', "<C-\\>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateLastActive()<cr>', {})
+map('n', "<C-Space>", '<cmd>lua require(\'nvim-tmux-navigation\').NvimTmuxNavigateNext()<cr>', {})
+-- lua require('nvim-tmux-navigation').NvimTmuxNavigateDown()
+
 map('n', '<Tab>', ':bn<cr>', { silent = true })
 map('n', '<S-Tab>', ':bp<cr>', { silent = true })
 map('n', '<leader>d', ':bd<cr>', {})

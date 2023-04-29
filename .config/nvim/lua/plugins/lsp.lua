@@ -19,7 +19,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-K>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
   vim.keymap.set('n', '<space>wl', function()
@@ -78,22 +78,6 @@ local function setup_nvim_autocomplete()
     window = {
       documentation = cmp.config.window.bordered(),
     },
-    -- formatting = {
-    --   format = function(entry, item)
-    --     local menu_map = {
-    --       buffer = '[Buf]',
-    --       nvim_lsp = '[LSP]',
-    --       nvim_lua = '[API]',
-    --       path = '[Path]',
-    --       luasnip = '[Snip]',
-    --       vsnip = '[Snip]',
-    --       conjure = '[Conj]',
-    --     }
-    --     item.menu = menu_map[entry.source.name] or string.format('[%s]', entry.source.name)
-    --     item.kind = vim.lsp.protocol.CompletionItemKind[item.kind]
-    --     return item
-    --   end,
-    -- },
     formatting = {
       format = function(_, vim_item)
          vim.cmd("packadd lspkind-nvim")
@@ -141,8 +125,6 @@ local function setup_nvim_autocomplete()
       { name = 'cmdline' }
     })
   })
-
-
 end
 
 local function setup_lsp_servers()
@@ -170,20 +152,21 @@ local function setup_lsp_servers()
       on_attach = on_attach,
       capabilities = capabilities,
   }
-  lspconfig.flow.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
+  lspconfig.tsserver.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+      cmd = { "typescript-language-server", "--stdio" }
+  }
+  lspconfig.tailwindcss.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   }
   lspconfig.lua_ls.setup{
-    on_attach = on_attach,
-    filetypes = { "lua" },
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim' }
-        }
-      }
+      on_attach = on_attach,
+      filetypes = {"lua"},
+      settings = {Lua={diagnostics={globals={'vim'}}}
     }
   }
 end
