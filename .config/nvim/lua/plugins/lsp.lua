@@ -158,10 +158,10 @@ local function setup_lsp_servers()
       filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
       cmd = { "typescript-language-server", "--stdio" }
   }
-  lspconfig.tailwindcss.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  lspconfig.flow.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { util.path.join(root_project_path, node_modules_bin_path, "flow"), "lsp" }
   }
   lspconfig.lua_ls.setup{
       on_attach = on_attach,
