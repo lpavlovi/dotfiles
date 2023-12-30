@@ -42,28 +42,20 @@ local function load_plugins()
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
         'onsails/lspkind.nvim',
-        'PaterJason/cmp-conjure',
         'L3MON4D3/LuaSnip',
         'saadparwaiz1/cmp_luasnip',
         'hrsh7th/cmp-vsnip',
       },
+      config = "require'plugins.nvim_cmp'",
     }
 
-    -- latest additions
-    use { 'ncm2/float-preview.nvim', config = "require'plugins.float_preview'" }
-    use { 'Shougo/deoplete.nvim', run= ':UpdateRemotePlugins', config = "require'plugins.deoplete'" }
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
       config = "require'plugins.lualine'"
     }
-    use { 'guns/vim-sexp', config="require'plugins.sexp'" }
-    use 'tpope/vim-sexp-mappings-for-regular-people'
-    use 'travonted/tree-sitter-fennel'
 
-    -- repl
-    use 'tpope/vim-repeat'
-    use 'pappasam/nvim-repl'
+    use { 'jose-elias-alvarez/null-ls.nvim', config="require'plugins.null_ls'"}
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config="require'plugins.treesitter'"}
     use {
@@ -73,9 +65,6 @@ local function load_plugins()
     }
 
     use { 'williamboman/mason.nvim', config="require'plugins.lsp'" }
-
-    use { 'Olical/conjure', config="require'plugins.conjure'" }
-
     -- Sync packer if we ran bootstrapping code (top of the file)
     -- on initializing neovim
     if packer_bootstrap then

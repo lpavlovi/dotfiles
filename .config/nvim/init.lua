@@ -85,7 +85,7 @@ map('n', '<leader>fh', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>'
 map('n', '<leader>fw', '<cmd>lua require(\'telescope.builtin\').grep_string({search=vim.fn.expand(\'<cword>\')})<cr>', {})
 map('n', '<leader>g', '<cmd>lua print(vim.fn.expand(\'<cword>\'))<cr>', {})
 
-vim.cmd('silent! colo dracula')
--- vim.cmd('silent! colo gruvbox')
+-- vim.cmd('silent! colo dracula')
+vim.cmd('silent! colo gruvbox')
 -- vim.cmd('silent! colo solarized8_flat')
 -- o.background="light"

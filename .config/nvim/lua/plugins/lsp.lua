@@ -129,34 +129,19 @@ end
 
 local function setup_lsp_servers()
   local lspconfig = require'lspconfig'
-  local util = require'lspconfig.util'
   local nvim_cmp = require'cmp_nvim_lsp'
   local lsp_installer = require'mason'
   local capabilities = nvim_cmp.default_capabilities()
-  local cwd_path = vim.fn.getcwd()
-  local home = vim.fn.expand('$HOME')
-  local root_project_path = util.root_pattern(".git")(cwd_path)
-  local node_modules_bin_path = "node_modules/.bin"
 
   lsp_installer.setup {}
   lspconfig.pyright.setup{
     on_attach = on_attach,
     capabilities = capabilities,
   }
-  lspconfig.clojure_lsp.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "clojure" },
-  }
-  lspconfig.clojure_lsp.setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
-  }
   lspconfig.tsserver.setup {
       on_attach = on_attach,
       capabilities = capabilities,
-      filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-      cmd = { "typescript-language-server", "--stdio" }
+      filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
   }
   lspconfig.tailwindcss.setup {
       on_attach = on_attach,
@@ -171,5 +156,5 @@ local function setup_lsp_servers()
   }
 end
 
-setup_nvim_autocomplete()
+-- setup_nvim_autocomplete()
 setup_lsp_servers()
