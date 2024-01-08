@@ -1,6 +1,6 @@
 local o = vim.o
 local g = vim.g
-local map = vim.api.nvim_set_keymap
+local keymap = vim.keymap
 
 -- global options
 g.mapleader = " "
@@ -25,6 +25,9 @@ o.clipboard = "unnamedplus"
 o.relativenumber = true
 o.rnu = true
 
+o.shiftwidth = 2
+o.expandtab = true
+
 o.termguicolors = true
 vim.cmd([[
   set t_Co=256
@@ -33,4 +36,6 @@ vim.cmd([[
   syntax on
 ]])
 
-map("n", ",/", ":noh<cr>", { silent = true})
+keymap.set("n", ",/", ":noh<cr>", { silent = true})
+keymap.set("n", ";", ":", { silent = true})
+keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
