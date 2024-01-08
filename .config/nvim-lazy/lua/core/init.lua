@@ -37,5 +37,7 @@ vim.cmd([[
 ]])
 
 keymap.set("n", ",/", ":noh<cr>", { silent = true})
+keymap.set("n", "<leader>ft", "<cmd>Neotree toggle<cr>", { silent = true})
+keymap.set("n", "<leader>fh", "<cmd>Neotree reveal_file=%<cr>", { silent = true})
 keymap.set("n", ";", ":", { silent = true})
-keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
+-- keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
